@@ -9,6 +9,22 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-steps:
-- script: echo "Hello Azure DevOps"
+stages:
 
+- stage: Build
+  jobs:
+  - job: BuildJob
+    steps:
+    - script: echo "Building TomcatMavenApp"
+      displayName: 'Build Application'
+
+- stage: Deploy
+  dependsOn: Build
+  jobs:
+  - job: DeployJob
+    steps:
+    - script: |
+        echo "Starting Deployment"
+        echo "Deploying TomcatMavenApp"
+        echo "Deployment Successful"
+      displayName: 'Deploy Application'
